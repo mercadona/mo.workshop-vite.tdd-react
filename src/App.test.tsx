@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
-
+import userEvent from "@testing-library/user-event";
 import App from "./App";
 
 it("should see the scale app", () => {
@@ -22,6 +22,16 @@ it("should see the scale app", () => {
   expect(calculateButton).toBeInTheDocument();
 });
 
-it("should be able to introduce a weight", async () => {
+it("should show the total price of weighted product", async () => {
   render(<App />);
+  const banana = screen.getByLabelText("Plátano");
+  await userEvent.click(banana);
+
+  const weightInput = screen.getByLabelText("Peso:");
+  await userEvent.type(weightInput, "2");
+  const calculateButton = screen.getByRole("button", { name: "Calcular" });
+  await userEvent.click(calculateButton);
+
+  const total = screen.getByLabelText("Total:");
+  expect(total).toHaveValue("3.38");
 });
