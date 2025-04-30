@@ -34,3 +34,9 @@ it("should show the total price of weighted product", async () => {
   const total = screen.getByLabelText("Total:");
   expect(total).toHaveValue("3.38");
 });
+
+it("should add the last weighted product in the sidebar", async () => {});
+
+it("should show the list of weighted products with total price", async () => {});
+
+it("should show the list of weighted products with product names", async () => {});
