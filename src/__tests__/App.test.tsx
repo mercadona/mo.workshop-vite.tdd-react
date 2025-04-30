@@ -2,7 +2,8 @@ import { render, screen } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import App from "./App";
+
+import App from "../App";
 
 it("should see the scale app", () => {
   render(<App />);
