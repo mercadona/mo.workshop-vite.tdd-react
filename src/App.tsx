@@ -62,7 +62,7 @@ const App = () => {
             }}>Calcular</button>
           </div>
           <ul>
-            <li></li>
+            <li>{currentPrice} €</li>
           </ul>
           <div>
             <span>Total</span>

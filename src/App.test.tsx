@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import {render, screen, within} from "@testing-library/react";
 
 import "@testing-library/jest-dom";
 
@@ -38,4 +38,16 @@ it("should show weighted product price", async () => {
   await calculateCurrentTotal();
   const total = screen.getByLabelText("Total:");
   expect(total).toHaveValue(3.38);
+});
+
+it("should show weighted product price in the sidebar", async () => {
+  render(<App />);
+  await chooseProduct('Plátano');
+
+  await weightProduct('2');
+  await calculateCurrentTotal();
+
+  const productPricesList = screen.getByRole('list')
+  const [firstPrice] = within(productPricesList).getAllByRole('listitem');
+  expect(firstPrice).toHaveTextContent('3.38 €')
 });
