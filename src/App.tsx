@@ -1,7 +1,11 @@
+import { useState } from "react";
 import products from "./products.json";
 import { Product } from "./types";
 
 const App = () => {
+  const [price, setPrice] = useState(0);
+  const [weight, setWeight] = useState("");
+
   const isError = false;
 
   return (
@@ -9,7 +13,14 @@ const App = () => {
       <div className="display">
         <label htmlFor="weight">
           Peso:
-          <input id="weight" name="weight" type="number" placeholder="0,000" />
+          <input
+            id="weight"
+            name="weight"
+            type="number"
+            placeholder="0,000"
+            value={weight}
+            onChange={(e) => setWeight(e.currentTarget.value)}
+          />
         </label>
 
         <label htmlFor="price">
@@ -20,6 +31,7 @@ const App = () => {
             placeholder="0,000"
             readOnly
             disabled
+            value={price}
           />
         </label>
         <label htmlFor="total">
@@ -35,7 +47,7 @@ const App = () => {
                 key={product.id}
                 aria-label={product.name}
                 value={product.price}
-                onClick={() => null}
+                onClick={() => setPrice(product.price)}
               >
                 <img src={product.image} alt="" />
               </button>
