@@ -51,3 +51,35 @@ it("should show weighted product price in the sidebar", async () => {
   const [firstPrice] = within(productPricesList).getAllByRole('listitem');
   expect(firstPrice).toHaveTextContent('3.38 €')
 });
+
+
+it("should show several weighted products prices in the sidebar", async () => {
+  render(<App />);
+  await chooseProduct('Plátano');
+  await weightProduct('2');
+  await calculateCurrentTotal();
+
+  await chooseProduct('Naranja');
+  await weightProduct('1');
+  await calculateCurrentTotal();
+
+  const productPricesList = screen.getByRole('list')
+  const [firstPrice, secondPrice] = within(productPricesList).getAllByRole('listitem');
+  expect(firstPrice).toHaveTextContent('3.38 €')
+  expect(secondPrice).toHaveTextContent('1.55 €')
+});
+
+
+it("should show the total price", async () => {
+  render(<App />);
+  await chooseProduct('Plátano');
+  await weightProduct('2');
+  await calculateCurrentTotal();
+
+  await chooseProduct('Naranja');
+  await weightProduct('1');
+  await calculateCurrentTotal();
+
+  const totalPrice = screen.getByText('Total').nextSibling;
+  expect(totalPrice).toHaveTextContent('4.93 €')
+});

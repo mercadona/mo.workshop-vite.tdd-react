@@ -6,6 +6,7 @@ export async function chooseProduct(productName: string) {
 }
 export async function weightProduct(kilograms: string) {
   const weight = screen.getByLabelText("Peso:");
+  await userEvent.clear(weight);
   await userEvent.type(weight, kilograms);
 }
 

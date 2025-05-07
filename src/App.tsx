@@ -6,6 +6,7 @@ const App = () => {
   const [price, setPrice] = useState(0);
   const [weight, setWeight] = useState("");
   const [currentPrice, setCurrentPrice] = useState(0);
+    const [prices, setPrices] = useState<number[]>([]);
 
   const isError = false;
 
@@ -59,13 +60,25 @@ const App = () => {
           <div>
             <button onClick={() => {
               setCurrentPrice(price * parseFloat(weight))
+              setPrices((previousPrices) => {
+                return (
+                    [...previousPrices, price * parseFloat(weight)]
+                )
+              })
             }}>Calcular</button>
           </div>
           <ul>
-            <li>{currentPrice} €</li>
+            {prices.map((price: number, index: number) => {
+              return (
+                  <li key={index}>{price} €</li>
+              )
+            })}
           </ul>
           <div>
             <span>Total</span>
+            <div className="viva-el-mal">{prices.reduce((accumulator, price) => {
+              return accumulator + price;
+            }, 0)} €</div>
           </div>
           <div>
             <button>Limpiar</button>
