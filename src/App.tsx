@@ -5,6 +5,7 @@ import { Product } from "./types";
 const App = () => {
   const [price, setPrice] = useState(0);
   const [weight, setWeight] = useState("");
+  const [currentPrice, setCurrentPrice] = useState(0);
 
   const isError = false;
 
@@ -36,7 +37,7 @@ const App = () => {
         </label>
         <label htmlFor="total">
           Total:
-          <input id="total" type="number" placeholder="0,000" disabled />
+          <input id="total" type="number" placeholder="0,000" disabled value={currentPrice}/>
         </label>
       </div>
       <div className="controls">
@@ -56,7 +57,9 @@ const App = () => {
         </div>
         <aside className="sidebar">
           <div>
-            <button>Calcular</button>
+            <button onClick={() => {
+              setCurrentPrice(price * parseFloat(weight))
+            }}>Calcular</button>
           </div>
           <ul>
             <li></li>
