@@ -8,7 +8,9 @@
     "test": "vitest",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --cache --write \"src/**/*.{ts,tsx,css,json,md}\"",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "react": "^19.0.0",

@@ -12,12 +12,7 @@ module.exports = {
   semi: false,
   trailingComma: 'all',
   singleQuote: true,
-  importOrder: [
-    '<THIRD_PARTY_MODULES>',
-    '^@mercadona/(.*)$',
-    baseUrlSubdirectoryRegex,
-    '^[./]'
-  ],
-  importOrderSeparation: true,
-  importOrderSortSpecifiers: true,
 }
+
+
+
