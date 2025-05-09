@@ -1,12 +1,12 @@
-import { useState } from "react";
-import products from "./products.json";
-import { Product } from "./types";
+import { useState } from 'react'
+import products from './products.json'
+import { Product } from './types'
 
-const EMPTY = 0;
-const NO_ERROR = false;
+const EMPTY = 0
+const NO_ERROR = false
 
 const App = () => {
-  const [error, setError] = useState(NO_ERROR);
+  const [error, setError] = useState(NO_ERROR)
 
   return (
     <div className="app">
@@ -49,7 +49,7 @@ const App = () => {
               >
                 <img src={product.image} alt="" />
               </button>
-            );
+            )
           })}
         </div>
         <div className="sidebar" data-testid="sidebar">
@@ -60,7 +60,7 @@ const App = () => {
       </div>
       {error && <div className="error">Error</div>}
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

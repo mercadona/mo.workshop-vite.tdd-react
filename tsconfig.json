@@ -6,6 +6,7 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "types": ["vitest"]
+    "types": ["vitest"],
+    "baseUrl": "src"
   }
 }
