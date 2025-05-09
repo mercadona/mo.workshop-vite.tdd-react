@@ -1,0 +1,67 @@
+{
+    "extends": ["react-app", "prettier", "plugin:prettier/recommended"],
+    "plugins": ["prettier"],
+    "rules": {
+      "no-var": "error",
+      "no-empty": "error",
+      "block-scoped-var": "error",
+      "eqeqeq": "error",
+      "no-alert": "error",
+      "no-eval": "error",
+      "no-empty-function": "error",
+      "semi": ["error", "never"],
+      "arrow-spacing": "error",
+      "quotes": [2, "single", { "avoidEscape": true }],
+      "no-trailing-spaces": "error",
+      "comma-dangle": [
+        "error",
+        {
+          "arrays": "always-multiline",
+          "objects": "always-multiline",
+          "imports": "always-multiline",
+          "exports": "always-multiline",
+          "functions": "only-multiline"
+        }
+      ],
+      "react/react-in-jsx-scope": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "keyword-spacing": [
+        "error",
+        {
+          "after": true,
+          "before": true
+        }
+      ],
+      "space-before-function-paren": [
+        "error",
+        {
+          "anonymous": "always",
+          "named": "never",
+          "asyncArrow": "always"
+        }
+      ],
+      "max-len": ["error", { "code": 120, "ignoreStrings": true }],
+      "indent": ["error", 2],
+      "complexity": ["warn", 8],
+  
+      "react/no-unused-prop-types": 2,
+      "react/prop-types": 2,
+  
+      "no-prototype-builtins": "off",
+      "jsx-a11y/href-no-hash": "off",
+      "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }],
+      "prettier/prettier": "warn"
+    },
+    "globals": {
+      "Cypress": true,
+      "cy": true,
+      "given": true,
+      "when": true,
+      "then": true
+    },
+    "settings": {
+      "react": {
+        "version": "19.0.0"
+      }
+    }
+  }
