@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import App from '../App'
 
@@ -20,6 +21,19 @@ it('should see the scale app', () => {
   expect(calculateButton).toBeInTheDocument()
 })
 
-it('should be able to introduce a weight', async () => {
+it('should calculate the total', async () => {
+  const user = userEvent.setup()
+
   render(<App />)
+
+  const weightInput = screen.getByLabelText('Peso:')
+  const bananaButton = screen.getByLabelText('Plátano')
+  const calculateButton = screen.getByText('Calcular')
+  const totalInput = screen.getByLabelText('Total:')
+
+  await user.type(weightInput, '2')
+  await user.click(bananaButton)
+  await user.click(calculateButton)
+
+  expect(totalInput).toHaveValue(3.38)
 })
