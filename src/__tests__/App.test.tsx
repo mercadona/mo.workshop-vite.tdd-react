@@ -37,3 +37,18 @@ it('should calculate the total', async () => {
 
   expect(totalInput).toHaveValue(3.38)
 })
+
+it('should add the last weighed price in the sidebar', async () => {
+  render(<App />)
+
+  const weightInput = screen.getByLabelText('Peso:')
+  const calculateButton = screen.getByText('Calcular')
+  const bananaButton = screen.getByLabelText('Plátano')
+  const sidebar = screen.getByRole('complementary')
+
+  await userEvent.click(bananaButton)
+  await userEvent.type(weightInput, '2')
+  await userEvent.click(calculateButton)
+
+  expect(sidebar).toHaveTextContent('3.38 €')
+})
