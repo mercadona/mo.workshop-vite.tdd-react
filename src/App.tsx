@@ -7,9 +7,11 @@ interface WeightedProduct {
   price: number
 }
 
-const App = () => {
-  const isError = false
+const validateInputs = (weight: number, price?: number) => {
+  return !price || !weight
+}
 
+const App = () => {
   const [weight, setWeight] = useState('')
   const [weightedProductPrice, setWeightedProductPrice] = useState(0)
   const [weightedProducts, setWeightedProducts] = useState<WeightedProduct[]>(
@@ -18,6 +20,8 @@ const App = () => {
   const [chosenProduct, setChosenProduct] = useState<WeightedProduct | null>(
     null,
   )
+
+  const [isError, setIsError] = useState(false)
 
   const totalPrice = useMemo(
     () =>
@@ -33,11 +37,13 @@ const App = () => {
   }
 
   const calculateTotal = () => {
-    if (!chosenProduct) return
-
     const weightNumber = Number(weight)
-    const totalWeightedProductPrice = chosenProduct.price * weightNumber
+    const isError = validateInputs(weightNumber, chosenProduct?.price)
+    setIsError(isError)
 
+    if (isError || !chosenProduct) return
+
+    const totalWeightedProductPrice = chosenProduct.price * weightNumber
     setWeightedProductPrice(totalWeightedProductPrice)
     setWeightedProducts((weightedProducts) => [
       ...weightedProducts,
@@ -115,7 +121,7 @@ const App = () => {
           <div>Total - {totalPrice} €</div>
         </aside>
       </div>
-      {isError && <div className="error"></div>}
+      {isError && <div className="error">Error</div>}
     </div>
   )
 }

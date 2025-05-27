@@ -122,3 +122,31 @@ it('should clear the list of products', async () => {
   expect(productList).not.toHaveTextContent('Plátano - 3.38 €')
   expect(sidebar).toHaveTextContent('Total - 0 €')
 })
+
+it('should show the error if the product was not weigted', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  const bananaButton = screen.getByLabelText('Plátano')
+  const calculateButton = screen.getByText('Calcular')
+
+  await user.click(bananaButton)
+  await user.click(calculateButton)
+
+  expect(screen.getByText('Error')).toBeInTheDocument()
+})
+
+it('should show the error if the product was not chosen', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  const weightInput = screen.getByLabelText('Peso:')
+  const calculateButton = screen.getByText('Calcular')
+
+  await user.type(weightInput, '2')
+  await user.click(calculateButton)
+
+  expect(screen.getByText('Error')).toBeInTheDocument()
+})
