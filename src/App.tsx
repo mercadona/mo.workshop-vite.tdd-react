@@ -1,23 +1,48 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import products from './products.json'
 import { Product } from 'types'
+
+interface WeightedProduct {
+  name: string
+  price: number
+}
 
 const App = () => {
   const isError = false
 
   const [weight, setWeight] = useState('')
-  const [chosenProductPrice, setChosenProductPrice] = useState(0)
-  const [total, setTotal] = useState(0)
+  const [weightedProductPrice, setWeightedProductPrice] = useState(0)
+  const [weightedProducts, setWeightedProducts] = useState<WeightedProduct[]>(
+    [],
+  )
+  const [chosenProduct, setChosenProduct] = useState<WeightedProduct | null>(
+    null,
+  )
 
-  const chooseProduct = (price: number) => {
-    setChosenProductPrice(price)
+  const totalPrice = useMemo(
+    () =>
+      weightedProducts.reduce(
+        (acc, weightedProduct) => acc + weightedProduct.price,
+        0,
+      ),
+    [weightedProducts],
+  )
+
+  const chooseProduct = (price: number, name: string) => {
+    setChosenProduct({ price, name })
   }
 
   const calculateTotal = () => {
-    const weightNumber = Number(weight)
+    if (!chosenProduct) return
 
-    const totalPrice = chosenProductPrice * weightNumber
-    setTotal(totalPrice)
+    const weightNumber = Number(weight)
+    const totalWeightedProductPrice = chosenProduct.price * weightNumber
+
+    setWeightedProductPrice(totalWeightedProductPrice)
+    setWeightedProducts((weightedProducts) => [
+      ...weightedProducts,
+      { name: chosenProduct.name, price: totalWeightedProductPrice },
+    ])
   }
 
   return (
@@ -42,7 +67,7 @@ const App = () => {
             type="number"
             placeholder="0,000"
             readOnly
-            value={chosenProductPrice}
+            value={chosenProduct?.price}
           />
         </label>
         <label htmlFor="total">
@@ -52,7 +77,7 @@ const App = () => {
             type="number"
             placeholder="0,000"
             readOnly
-            value={total}
+            value={weightedProductPrice}
           />
         </label>
       </div>
@@ -64,7 +89,7 @@ const App = () => {
                 key={product.id}
                 aria-label={product.name}
                 value={product.price}
-                onClick={() => chooseProduct(product.price)}
+                onClick={() => chooseProduct(product.price, product.name)}
               >
                 <img src={product.image} alt="" />
               </button>
@@ -75,7 +100,14 @@ const App = () => {
           <div>
             <button onClick={calculateTotal}>Calcular</button>
           </div>
-          <div>{total} €</div>
+          <ul>
+            {weightedProducts.map((weightedProduct) => (
+              <li key={weightedProduct.name}>
+                {weightedProduct.name} - {weightedProduct.price} €
+              </li>
+            ))}
+          </ul>
+          <div>Total - {totalPrice} €</div>
         </aside>
       </div>
       {isError && <div className="error"></div>}
