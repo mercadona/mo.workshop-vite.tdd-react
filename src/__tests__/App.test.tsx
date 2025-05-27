@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import App from '../App'
@@ -100,4 +100,25 @@ it('should display the total price of all the weighed products', async () => {
   await user.click(calculateButton)
 
   expect(sidebar).toHaveTextContent('Total - 7.1 €')
+})
+
+it('should clear the list of products', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  const weightInput = screen.getByLabelText('Peso:')
+  const bananaButton = screen.getByLabelText('Plátano')
+  const calculateButton = screen.getByText('Calcular')
+  const sidebar = screen.getByRole('complementary')
+  const clearButton = screen.getByText('Limpiar')
+  const productList = within(sidebar).getByRole('list')
+
+  await user.type(weightInput, '2')
+  await user.click(bananaButton)
+  await user.click(calculateButton)
+  await user.click(clearButton)
+
+  expect(productList).not.toHaveTextContent('Plátano - 3.38 €')
+  expect(sidebar).toHaveTextContent('Total - 0 €')
 })

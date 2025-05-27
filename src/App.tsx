@@ -45,6 +45,10 @@ const App = () => {
     ])
   }
 
+  const clearTicket = () => {
+    setWeightedProducts([])
+  }
+
   return (
     <div className="app">
       <div className="display">
@@ -99,6 +103,7 @@ const App = () => {
         <aside className="sidebar">
           <div>
             <button onClick={calculateTotal}>Calcular</button>
+            <button onClick={clearTicket}>Limpiar</button>
           </div>
           <ul>
             {weightedProducts.map((weightedProduct) => (
