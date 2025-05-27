@@ -78,3 +78,26 @@ it('should show the list with name for each weighed product in the sidebar', asy
   expect(sidebar).toHaveTextContent('Plátano - 3.38 €')
   expect(sidebar).toHaveTextContent('Sandía - 3.72 €')
 })
+
+it('should display the total price of all the weighed products', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  const weightInput = screen.getByLabelText('Peso:')
+  const bananaButton = screen.getByLabelText('Plátano')
+  const calculateButton = screen.getByText('Calcular')
+  const watermelonButton = screen.getByLabelText('Sandía')
+  const sidebar = screen.getByRole('complementary')
+
+  await user.type(weightInput, '2')
+  await user.click(bananaButton)
+  await user.click(bananaButton)
+  await user.click(calculateButton)
+  await user.clear(weightInput)
+  await user.type(weightInput, '4')
+  await user.click(watermelonButton)
+  await user.click(calculateButton)
+
+  expect(sidebar).toHaveTextContent('Total - 7.1 €')
+})
