@@ -21,6 +21,19 @@ it('should see the scale app', () => {
   expect(calculateButton).toBeInTheDocument()
 })
 
+it('should show price of product', async () => {
+  const user = userEvent.setup()
+
+  render(<App />)
+
+  const priceInput = screen.getByLabelText('Precio:')
+  const bananaButton = screen.getByLabelText('Plátano')
+
+  await user.click(bananaButton)
+
+  expect(priceInput).toHaveValue(1.69)
+})
+
 it('should calculate the total', async () => {
   const user = userEvent.setup()
 
